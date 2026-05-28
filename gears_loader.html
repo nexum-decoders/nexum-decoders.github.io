@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #ffffff;
+  }
+  .gear-left {
+    animation: spin-cw 2s linear infinite;
+    transform-origin: 40px 40px;
+  }
+  .gear-right {
+    animation: spin-ccw 2s linear infinite;
+    transform-origin: 40px 40px;
+  }
+  @keyframes spin-cw  { to { transform: rotate(360deg);  } }
+  @keyframes spin-ccw { to { transform: rotate(-360deg); } }
+</style>
+</head>
+<body>
+
+<!--
+  Body radius:     28px
+  Tooth height:    11px
+  Tip radius:      39px
+  Center-to-center: 28 + 28 + 11 = 67px  (tips interlock ~half tooth depth)
+  Left center in SVG:  (48, 48)
+  Right center:        (48 + 67, 48) = (115, 48)
+  SVG width:  8 + 40 + 67 + 40 + 8 = 163
+  SVG height: 96
+-->
+
+<svg width="163" height="96" viewBox="0 0 163 96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <rect id="tooth" x="-6" y="-39" width="12" height="11" rx="2"/>
+  </defs>
+
+  <!-- LEFT GEAR — local origin (8,8), gear center at (40,40) -->
+  <g transform="translate(8,8)">
+    <g class="gear-left">
+      <use href="#tooth" fill="#777" transform="rotate(  0,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate( 45,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate( 90,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate(135,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate(180,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate(225,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate(270,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#777" transform="rotate(315,40,40) translate(40,40)"/>
+      <circle cx="40" cy="40" r="28" fill="#777"/>
+      <circle cx="40" cy="40" r="18" fill="#fff"/>
+      <circle cx="40" cy="40" r="7"  fill="#777"/>
+      <circle cx="40" cy="40" r="3"  fill="#fff"/>
+    </g>
+  </g>
+
+  <!-- RIGHT GEAR — local origin (75,8), gear center at (40,40) → SVG center (115,48) -->
+  <g transform="translate(75,8)">
+    <g class="gear-right">
+      <use href="#tooth" fill="#444" transform="rotate( 22.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate( 67.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate(112.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate(157.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate(202.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate(247.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate(292.5,40,40) translate(40,40)"/>
+      <use href="#tooth" fill="#444" transform="rotate(337.5,40,40) translate(40,40)"/>
+      <circle cx="40" cy="40" r="28" fill="#444"/>
+      <circle cx="40" cy="40" r="18" fill="#fff"/>
+      <circle cx="40" cy="40" r="7"  fill="#444"/>
+      <circle cx="40" cy="40" r="3"  fill="#fff"/>
+    </g>
+  </g>
+
+</svg>
+
+</body>
+</html>

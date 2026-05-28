@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gear Wheel 02</title>
+  <link rel="stylesheet" href="gears.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #0a0a0f;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gear-left  { color: #4a8fa8; }
+    .gear-right { color: #87ceeb; }
+  </style>
+</head>
+<body>
+
+<svg width="163" height="96" viewBox="0 0 163 96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <rect id="tooth2" x="-6" y="-39" width="12" height="11" rx="2"
+          fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+  </defs>
+
+  <!-- LEFT GEAR -->
+  <g transform="translate(8,8)">
+    <g class="gear-left">
+      <circle cx="40" cy="40" r="28" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+      <use href="#tooth2" transform="rotate(  0,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate( 45,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate( 90,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(135,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(180,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(225,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(270,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(315,40,40) translate(40,40)"/>
+      <circle cx="40" cy="40" r="18" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="7"  fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="3"  fill="currentColor"/>
+    </g>
+  </g>
+
+  <!-- RIGHT GEAR -->
+  <g transform="translate(75,8)">
+    <g class="gear-right">
+      <circle cx="40" cy="40" r="28" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+      <use href="#tooth2" transform="rotate( 22.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate( 67.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(112.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(157.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(202.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(247.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(292.5,40,40) translate(40,40)"/>
+      <use href="#tooth2" transform="rotate(337.5,40,40) translate(40,40)"/>
+      <circle cx="40" cy="40" r="18" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="7"  fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="3"  fill="currentColor"/>
+    </g>
+  </g>
+</svg>
+
+</body>
+</html>

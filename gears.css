@@ -1,0 +1,26 @@
+/* Shared gear animation — linked by index.html, gear_wheel_01.html, gear_wheel_02.html */
+
+.gear-left {
+  animation: spin-cw var(--gear-speed, 4s) linear infinite;
+  transform-origin: 40px 40px;
+}
+.gear-right {
+  animation: spin-ccw var(--gear-speed, 4s) linear infinite;
+  transform-origin: 40px 40px;
+}
+@keyframes spin-cw  { to { transform: rotate(360deg);  } }
+@keyframes spin-ccw { to { transform: rotate(-360deg); } }
+
+/* v1 fills — driven by CSS vars set in CONFIG (harmless if .gear-v1 doesn't exist) */
+.gear-v1 .gear-left  use                   { fill: var(--gear-v1-left);  }
+.gear-v1 .gear-right use                   { fill: var(--gear-v1-right); }
+.gear-v1 .gear-left  circle:nth-of-type(1),
+.gear-v1 .gear-left  circle:nth-of-type(3) { fill: var(--gear-v1-left);  }
+.gear-v1 .gear-right circle:nth-of-type(1),
+.gear-v1 .gear-right circle:nth-of-type(3) { fill: var(--gear-v1-right); }
+.gear-v1 circle:nth-of-type(2),
+.gear-v1 circle:nth-of-type(4)             { fill: #0a0a0f; }
+
+/* v2 colors — currentColor picks up the color property (harmless if .gear-v2 doesn't exist) */
+.gear-v2 .gear-left  { color: var(--gear-v2-left);  }
+.gear-v2 .gear-right { color: var(--gear-v2-right); }
