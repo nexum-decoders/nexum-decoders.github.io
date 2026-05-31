@@ -22,7 +22,7 @@
 
   const d = 'M' + pts.map(p => p[0].toFixed(2) + ',' + p[1].toFixed(2)).join('L');
 
-  window.GEAR_CSS = `
+  window.ANIM_CSS = `
 <style>
   .harm-path {
     fill: none;
@@ -39,10 +39,10 @@
     96%  { stroke-dashoffset: 0;    opacity: 0; }
     100% { stroke-dashoffset: ${L}; opacity: 0; }
   }
-  .gear-v2 .harm-group { color: var(--gear-v2-left); }
+  .anim-v2 .harm-group { color: var(--anim-color-left); }
 </style>`;
 
-  window.GEAR_SVG = `
+  window.ANIM_SVG = `
 <svg width="116" height="88" viewBox="0 0 116 88" xmlns="http://www.w3.org/2000/svg">
   <g class="harm-group">
     <path class="harm-path" d="${d}"/>

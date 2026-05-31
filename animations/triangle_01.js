@@ -1,18 +1,18 @@
-window.GEAR_CSS = `
+window.ANIM_CSS = `
 <style>
   .gear-left {
-    animation: spin-cw var(--gear-speed, 4s) linear infinite;
+    animation: spin-cw var(--anim-speed, 4s) linear infinite;
     transform-origin: 40px 40px;
   }
   .gear-right {
-    animation: spin-ccw var(--gear-speed, 4s) linear infinite;
+    animation: spin-ccw var(--anim-speed, 4s) linear infinite;
     transform-origin: 40px 40px;
   }
   @keyframes spin-cw  { to { transform: rotate(360deg);  } }
   @keyframes spin-ccw { to { transform: rotate(-360deg); } }
 
-  .gear-v2 .gear-left  { color: var(--gear-v2-left);  }
-  .gear-v2 .gear-right { color: var(--gear-v2-right); }
+  .anim-v2 .gear-left  { color: var(--anim-color-left);  }
+  .anim-v2 .gear-right { color: var(--anim-color-right); }
 </style>
 `;
 
@@ -22,7 +22,7 @@ window.GEAR_CSS = `
 // Center-to-center = 28px (half of side length 56px).
 // SVG (116×88): 8px padding around full rotation sweep of each centroid.
 
-window.GEAR_SVG = `
+window.ANIM_SVG = `
 <svg width="116" height="88" viewBox="0 0 116 88" xmlns="http://www.w3.org/2000/svg">
   <g transform="translate(8,8)">
     <g class="gear-left">

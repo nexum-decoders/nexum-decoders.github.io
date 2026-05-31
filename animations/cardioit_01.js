@@ -19,13 +19,13 @@
     return `<line id="rl${k}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" opacity="0"/>`;
   }).join('\n    ');
 
-  window.GEAR_CSS = `
+  window.ANIM_CSS = `
 <style>
   .ruled-group line { stroke: currentColor; stroke-width: 0.9; }
-  .gear-v2 .ruled-group { color: var(--gear-v2-left); }
+  .anim-v2 .ruled-group { color: var(--anim-color-left); }
 </style>`;
 
-  window.GEAR_SVG = `
+  window.ANIM_SVG = `
 <svg width="116" height="88" viewBox="0 0 116 88" xmlns="http://www.w3.org/2000/svg">
   <g class="ruled-group">
     ${lineEls}

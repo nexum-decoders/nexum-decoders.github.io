@@ -21,7 +21,7 @@
     return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="ruled-line" style="animation-delay:${delay}s"/>`;
   }).join('\n    ');
 
-  window.GEAR_CSS = `
+  window.ANIM_CSS = `
 <style>
   .ruled-line {
     stroke: currentColor;
@@ -41,10 +41,10 @@
     72%  { opacity: 0.65; }
     100% { opacity: 0;    }
   }
-  .gear-v2 .ruled-group { color: var(--gear-v2-left); }
+  .anim-v2 .ruled-group { color: var(--anim-color-left); }
 </style>`;
 
-  window.GEAR_SVG = `
+  window.ANIM_SVG = `
 <svg width="116" height="88" viewBox="0 0 116 88" xmlns="http://www.w3.org/2000/svg">
   <g class="ruled-group">
     <line x1="${cx - R}" y1="${cy}" x2="${cx + R}" y2="${cy}" class="zero-line"/>

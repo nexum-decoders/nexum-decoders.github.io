@@ -1,22 +1,22 @@
-window.GEAR_CSS = `
+window.ANIM_CSS = `
 <style>
   .gear-left {
-    animation: spin-cw var(--gear-speed, 4s) linear infinite;
+    animation: spin-cw var(--anim-speed, 4s) linear infinite;
     transform-origin: 40px 40px;
   }
   .gear-right {
-    animation: spin-ccw var(--gear-speed, 4s) linear infinite;
+    animation: spin-ccw var(--anim-speed, 4s) linear infinite;
     transform-origin: 40px 40px;
   }
   @keyframes spin-cw  { to { transform: rotate(360deg);  } }
   @keyframes spin-ccw { to { transform: rotate(-360deg); } }
 
-  .gear-v2 .gear-left  { color: var(--gear-v2-left);  }
-  .gear-v2 .gear-right { color: var(--gear-v2-right); }
+  .anim-v2 .gear-left  { color: var(--anim-color-left);  }
+  .anim-v2 .gear-right { color: var(--anim-color-right); }
 </style>
 `;
 
-window.GEAR_SVG = `
+window.ANIM_SVG = `
 <svg width="170" height="96" viewBox="0 0 170 96" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <path id="tooth-v2" d="M -6.5,-31 L -6.5,-41 Q -6.5,-43 -4.5,-43 L 4.5,-43 Q 6.5,-43 6.5,-41 L 6.5,-31"

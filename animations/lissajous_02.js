@@ -60,7 +60,7 @@
   const fwdD = `M${polyline}${bez}`;
   const revD = `M${P0[0].toFixed(2)},${P0[1].toFixed(2)}${revBez}L${revPoly}`;
 
-  window.GEAR_CSS = `
+  window.ANIM_CSS = `
 <style>
   .harm-fwd, .harm-rev {
     fill: none;
@@ -69,10 +69,10 @@
   }
   .harm-fwd { stroke: currentColor; stroke-width: 1.5; }
   .harm-rev  { stroke: #0a0a0f;     stroke-width: 2;   }
-  .gear-v2 .harm-group { color: var(--gear-v2-left); }
+  .anim-v2 .harm-group { color: var(--anim-color-left); }
 </style>`;
 
-  window.GEAR_SVG = `
+  window.ANIM_SVG = `
 <svg width="116" height="88" viewBox="0 0 116 88" xmlns="http://www.w3.org/2000/svg">
   <g class="harm-group">
     <path class="harm-fwd" stroke-dashoffset="${L}" d="${fwdD}"/>

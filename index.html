@@ -7,7 +7,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .gears { margin-bottom: 50px; }
+    .animation { margin-bottom: 37.5px; }
 
     body {
       background-color: #0a0a0f;
@@ -18,28 +18,44 @@
       justify-content: center;
     }
 
+    .page-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Single scaling knob: both h1 and subtitle are em-relative to this */
+    .brand-text {
       display: inline-flex;
       flex-direction: column;
       align-items: stretch;
+      font-size: clamp(var(--brand-size-min), 6vw, var(--brand-size-max));
+      visibility: hidden;
     }
 
     h1 {
       color: var(--title-color, #87ceeb);
       font-family: 'Georgia', serif;
-      font-size: clamp(2rem, 6vw, 5rem);
+      font-size: 1em;
       font-weight: 300;
       font-style: italic;
       letter-spacing: 0.12em;
     }
 
     .subtitle {
-      --letter-gap: 0px;
+      --letter-gap: 0em;
       color: var(--subtitle-color, #808080);
       font-family: 'Georgia', serif;
-      font-size: clamp(0.55rem, 1.1vw, 0.85rem);
+      /* 0.85rem / 5rem = 0.17 — keeps same visual ratio as the design */
+      font-size: 0.17em;
       font-weight: 300;
-      margin-top: 10px;
+      margin-top: 0.6em;
       display: flex;
       gap: var(--letter-gap);
     }
@@ -81,56 +97,91 @@
     const CONFIG = {
       titleColor:    '#1E90FF',
       subtitleColor: '#808080',
-      gearV2Left:    '#1E90FF',
-      gearV2Right:   '#1E90FF',
+      animColorLeft:  '#1E90FF',
+      animColorRight: '#1E90FF',
+      brandSizeMin:  '2.5rem',   // smallest the brand text will shrink to
+      brandSizeMax:  '4.5rem',   // largest it will grow to
     };
     // ────────────────────────────────────────────────────────────
 
     const R = document.documentElement.style;
     R.setProperty('--title-color',    CONFIG.titleColor);
     R.setProperty('--subtitle-color', CONFIG.subtitleColor);
-    R.setProperty('--gear-v2-left',   CONFIG.gearV2Left);
-    R.setProperty('--gear-v2-right',  CONFIG.gearV2Right);
+    R.setProperty('--anim-color-left',  CONFIG.animColorLeft);
+    R.setProperty('--anim-color-right', CONFIG.animColorRight);
+    R.setProperty('--brand-size-min',   CONFIG.brandSizeMin);
+    R.setProperty('--brand-size-max',   CONFIG.brandSizeMax);
   </script>
 
-  <!-- swap gear design by changing this src -->
+  <!-- swap animation by changing this src -->
   <script src="animations/cardioit_03.js"></script>
-  <script>document.head.insertAdjacentHTML('beforeend', window.GEAR_CSS);</script>
-  <div class="gears gear-v2"></div>
-  <script>document.querySelector('.gears').innerHTML = window.GEAR_SVG;</script>
+  <script>document.head.insertAdjacentHTML('beforeend', window.ANIM_CSS);</script>
+  <div class="page-center">
+  <div class="animation anim-v2"></div>
+  <script>document.querySelector('.animation').innerHTML = window.ANIM_SVG;</script>
 
   <div class="brand">
-    <h1>Nexum Decoders<span class="tm">&#8482;</span></h1>
-    <p class="subtitle"><span>A</span><span>G</span><span>E</span><span>N</span><span>T</span><span>I</span><span>C</span><span class="word-gap"></span><span>A</span><span>U</span><span>T</span><span>O</span><span>M</span><span>A</span><span>T</span><span>I</span><span>O</span><span>N</span></p>
+    <div class="brand-text">
+      <h1>Nexum Decoders<span class="tm">&#8482;</span></h1>
+      <p class="subtitle"><span>A</span><span>G</span><span>E</span><span>N</span><span>T</span><span>I</span><span>C</span><span class="word-gap"></span><span>A</span><span>U</span><span>T</span><span>O</span><span>M</span><span>A</span><span>T</span><span>I</span><span>O</span><span>N</span></p>
+    </div>
     <p class="tagline">...building new operating systems, soon...</p>
+  </div>
   </div>
 
   <footer>© 2026 NexDec LLC</footer>
 
   <script>
+    // Runs once after fonts load. Sets letter-spacing and gap in `em` so they
+    // scale proportionally with .brand-text font-size at all viewport widths.
     function alignText() {
       const h1  = document.querySelector('h1');
       const sub = document.querySelector('.subtitle');
 
       h1.style.letterSpacing = '0';
-      sub.style.setProperty('--letter-gap', '0px');
+      sub.style.setProperty('--letter-gap', '0em');
       sub.style.alignSelf = 'flex-start';
 
       const h1BaseWidth = h1.getBoundingClientRect().width;
       const subNatWidth = sub.getBoundingClientRect().width;
       sub.style.alignSelf = '';
 
-      const units       = sub.querySelectorAll('span').length + 1;
-      const gap         = Math.ceil((h1BaseWidth - subNatWidth) / units);
-      const targetWidth = subNatWidth + gap * units;
-      const h1Chars     = h1.textContent.trim().length;
+      const h1FontPx  = parseFloat(getComputedStyle(h1).fontSize);
+      const subFontPx = parseFloat(getComputedStyle(sub).fontSize);
+      const units     = sub.querySelectorAll('span').length + 1;
+      const gapPx     = Math.ceil((h1BaseWidth - subNatWidth) / units);
+      const targetWidth = subNatWidth + gapPx * units;
+      const h1Chars   = h1.textContent.trim().length;
+      const lsPx      = (targetWidth - h1BaseWidth) / h1Chars;
 
-      h1.style.letterSpacing = ((targetWidth - h1BaseWidth) / h1Chars) + 'px';
-      sub.style.setProperty('--letter-gap', gap + 'px');
+      // Store as em so they scale with the parent font-size on resize
+      h1.style.letterSpacing = (lsPx / h1FontPx) + 'em';
+      sub.style.setProperty('--letter-gap', (gapPx / subFontPx) + 'em');
+
+      // Correction pass for Safari trailing letter-spacing measurement
+      const diff = sub.getBoundingClientRect().width - h1.getBoundingClientRect().width;
+      if (Math.abs(diff) > 0.5) {
+        const currentLsEm = parseFloat(getComputedStyle(h1).letterSpacing) / h1FontPx;
+        h1.style.letterSpacing = (currentLsEm + diff / h1Chars / h1FontPx) + 'em';
+      }
+
+      document.querySelector('.brand-text').style.visibility = 'visible';
+      centerH1();
     }
 
-    document.fonts.ready.then(alignText);
-    window.addEventListener('resize', alignText);
+    function centerH1() {
+      const pc = document.querySelector('.page-center');
+      pc.style.transform = '';
+      const h1 = document.querySelector('h1');
+      const h1CenterY = h1.getBoundingClientRect().top + h1.getBoundingClientRect().height / 2;
+      const offset = window.innerHeight / 2 - h1CenterY;
+      pc.style.transform = `translateY(${offset}px)`;
+    }
+
+    document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(alignText)));
+
+    const ro = new ResizeObserver(() => centerH1());
+    ro.observe(document.documentElement);
   </script>
 
 </body>
