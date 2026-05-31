@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nexum Decoders</title>
-  <link rel="stylesheet" href="gears.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    .gears { margin-bottom: 50px; }
 
     body {
       background-color: #0a0a0f;
@@ -16,8 +17,6 @@
       align-items: center;
       justify-content: center;
     }
-
-    .gears { margin-bottom: 50px; }
 
     .brand {
       display: inline-flex;
@@ -77,80 +76,33 @@
 </head>
 <body>
 
-  <div class="gears">
+  <script>
+    // ─── CONFIGURATION ──────────────────────────────────────────
+    const CONFIG = {
+      titleColor:    '#1E90FF',
+      subtitleColor: '#808080',
+      gearV2Left:    '#1E90FF',
+      gearV2Right:   '#1E90FF',
+    };
+    // ────────────────────────────────────────────────────────────
 
-    <script>
-      // ─── CONFIGURATION ──────────────────────────────────────────
-      const CONFIG = {
-        //titleColor:    '#87ceeb', // Nexum Decoders
-        titleColor:    '#1E90FF', // Nexum Decoders
+    const R = document.documentElement.style;
+    R.setProperty('--title-color',    CONFIG.titleColor);
+    R.setProperty('--subtitle-color', CONFIG.subtitleColor);
+    R.setProperty('--gear-v2-left',   CONFIG.gearV2Left);
+    R.setProperty('--gear-v2-right',  CONFIG.gearV2Right);
+  </script>
 
-        subtitleColor: '#808080', // AGENTIC AUTOMATION
-
-        //gearV2Left:    '#4a8fa8', // v2 left gear
-        gearV2Left:    '#1E90FF', // v2 left gear
-
-        //gearV2Right:   '#87ceeb', // v2 right gear
-        gearV2Right:   '#1E90FF', // v2 right gear
-      };
-      // ────────────────────────────────────────────────────────────
-
-      // Apply all values as CSS custom properties
-      const R = document.documentElement.style;
-      R.setProperty('--title-color',     CONFIG.titleColor);
-      R.setProperty('--subtitle-color',  CONFIG.subtitleColor);
-      R.setProperty('--gear-v2-left',    CONFIG.gearV2Left);
-      R.setProperty('--gear-v2-right',   CONFIG.gearV2Right);
-    </script>
-
-    <!-- gear v2: outline -->
-    <div class="gear-v2">
-      <svg width="163" height="96" viewBox="0 0 163 96" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <rect id="tooth-v2" x="-6" y="-39" width="12" height="11" rx="2"
-                fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-        </defs>
-        <g transform="translate(8,8)">
-          <g class="gear-left">
-            <circle cx="40" cy="40" r="28" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-            <use href="#tooth-v2" transform="rotate(  0,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate( 45,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate( 90,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(135,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(180,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(225,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(270,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(315,40,40) translate(40,40)"/>
-            <circle cx="40" cy="40" r="18" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="40" cy="40" r="7"  fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="40" cy="40" r="3"  fill="currentColor"/>
-          </g>
-        </g>
-        <g transform="translate(75,8)">
-          <g class="gear-right">
-            <circle cx="40" cy="40" r="28" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-            <use href="#tooth-v2" transform="rotate( 22.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate( 67.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(112.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(157.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(202.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(247.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(292.5,40,40) translate(40,40)"/>
-            <use href="#tooth-v2" transform="rotate(337.5,40,40) translate(40,40)"/>
-            <circle cx="40" cy="40" r="18" fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="40" cy="40" r="7"  fill="#0a0a0f" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="40" cy="40" r="3"  fill="currentColor"/>
-          </g>
-        </g>
-      </svg>
-    </div>
-
-  </div>
+  <!-- swap gear design by changing this src -->
+  <script src="animations/cardioit_03.js"></script>
+  <script>document.head.insertAdjacentHTML('beforeend', window.GEAR_CSS);</script>
+  <div class="gears gear-v2"></div>
+  <script>document.querySelector('.gears').innerHTML = window.GEAR_SVG;</script>
 
   <div class="brand">
     <h1>Nexum Decoders<span class="tm">&#8482;</span></h1>
     <p class="subtitle"><span>A</span><span>G</span><span>E</span><span>N</span><span>T</span><span>I</span><span>C</span><span class="word-gap"></span><span>A</span><span>U</span><span>T</span><span>O</span><span>M</span><span>A</span><span>T</span><span>I</span><span>O</span><span>N</span></p>
-    <p class="tagline">...building new operating systems</p>
+    <p class="tagline">...building new operating systems, soon...</p>
   </div>
 
   <footer>© 2026 NexDec LLC</footer>
