@@ -11,7 +11,7 @@
 
     body {
       background-color: #0a0a0f;
-      height: 100vh;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -98,7 +98,6 @@
       titleColor:    '#1E90FF',
       subtitleColor: '#A0A0A0',
       animColorLeft:  '#1E90FF',
-      animColorRight: '#1E90FF',
       brandSizeMin:  '2.5rem',   // smallest the brand text will shrink to
       brandSizeMax:  '4.5rem',   // largest it will grow to
     };
@@ -108,8 +107,7 @@
     R.setProperty('--title-color',    CONFIG.titleColor);
     R.setProperty('--subtitle-color', CONFIG.subtitleColor);
     R.setProperty('--anim-color-left',  CONFIG.animColorLeft);
-    R.setProperty('--anim-color-right', CONFIG.animColorRight);
-    R.setProperty('--brand-size-min',   CONFIG.brandSizeMin);
+R.setProperty('--brand-size-min',   CONFIG.brandSizeMin);
     R.setProperty('--brand-size-max',   CONFIG.brandSizeMax);
   </script>
 
@@ -125,7 +123,7 @@
       <h1>Nexum Decoders<span class="tm">&#8482;</span></h1>
       <p class="subtitle"><span>A</span><span>G</span><span>E</span><span>N</span><span>T</span><span>I</span><span>C</span><span class="word-gap"></span><span>A</span><span>U</span><span>T</span><span>O</span><span>M</span><span>A</span><span>T</span><span>I</span><span>O</span><span>N</span></p>
     </div>
-    <p class="tagline">...building new operating systems, soon...</p>
+    <p class="tagline">...building new operating systems</p>
   </div>
   </div>
 
@@ -180,7 +178,11 @@
 
     document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(alignText)));
 
-    const ro = new ResizeObserver(() => centerH1());
+    let resizeTimer;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => requestAnimationFrame(alignText), 50);
+    });
     ro.observe(document.documentElement);
   </script>
 
