@@ -7,21 +7,51 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /* Grows on narrow windows so the wordmark keeps real air at the edges;
+       on desktop the 6vw clamp wins anyway and this has no visible effect. */
+    :root {
+      --gutter: clamp(24px, 10vw, 56px);
+
+      /* The single brand scaling knob. The min() caps the size by the width
+         actually available, so the 2.5rem floor can't push the wordmark past
+         the gutters on narrow windows. 8.6 is the wordmark's measured
+         width-to-font-size ratio, plus headroom for the letter-spacing
+         alignText() adds. Anything sized off the wordmark reads this. */
+      --brand-font: min(
+        clamp(var(--brand-size-min), 6vw, var(--brand-size-max)),
+        calc((100vw - var(--gutter) * 2) / 8.6)
+      );
+
+      /* Subtitle and tagline size, as a fraction of the wordmark */
+      --sub-ratio: 0.17;
+    }
+
+    /* On phones the wordmark shrinks to fit, which would drag the spaced caps
+       down to ~6px. Raise the ratio so they stay readable — there is room:
+       the subtitle only outgrows the wordmark's width above ~28px. */
+    @media (max-width: 600px) {
+      :root { --sub-ratio: 0.26; }
+    }
+
     .animation { margin-bottom: 37.5px; }
 
     body {
       background-color: #0a0a0f;
-      height: 100dvh;
+      min-height: 100vh;   /* fallback — dvh is dropped by older engines */
+      min-height: 100dvh;  /* preferred: excludes mobile browser chrome */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      /* reserve the fixed footer's band so centring reads as even */
+      padding-bottom: 56px;
     }
 
     .page-center {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-inline: var(--gutter);
     }
 
     .brand {
@@ -35,7 +65,7 @@
       display: inline-flex;
       flex-direction: column;
       align-items: stretch;
-      font-size: clamp(var(--brand-size-min), 6vw, var(--brand-size-max));
+      font-size: var(--brand-font);
       visibility: hidden;
     }
 
@@ -52,8 +82,7 @@
       --letter-gap: 0em;
       color: var(--subtitle-color, #808080);
       font-family: 'Georgia', serif;
-      /* 0.85rem / 5rem = 0.17 — keeps same visual ratio as the design */
-      font-size: 0.17em;
+      font-size: calc(1em * var(--sub-ratio));
       font-weight: 300;
       margin-top: 0.6em;
       display: flex;
@@ -72,8 +101,8 @@
     .tagline {
       color: var(--subtitle-color, #808080);
       font-family: 'Georgia', serif;
-      /* same computed size as .subtitle (0.17 of the brand scaling knob) */
-      font-size: calc(clamp(var(--brand-size-min), 6vw, var(--brand-size-max)) * 0.17);
+      /* same computed size as .subtitle */
+      font-size: calc(var(--brand-font) * var(--sub-ratio));
       font-style: normal;
       font-weight: 300;
       text-transform: uppercase;
@@ -93,6 +122,34 @@
       margin-top: 30px;
     }
 
+    /* Vision statement — hierarchy by size/color only, no bold, no second typeface */
+    .vision {
+      max-width: 44ch;
+      margin: 36px auto 0;
+      font-family: 'Georgia', serif;
+      font-weight: 300;
+      line-height: 1.65;
+      text-align: center;
+      /* keeps lines even and stops orphans like "world requires…" */
+      text-wrap: balance;
+    }
+
+    .vision p {
+      color: #c9c9c9;
+      font-size: clamp(13px, 1.15vw, 15px);
+    }
+
+    .vision p + p { margin-top: 0.9em; }
+
+    .vision .vision-lead { color: var(--title-color, #1E90FF); }
+
+    .vision .vision-note {
+      color: #6f6f6f;
+      font-size: clamp(12px, 1vw, 13.5px);
+      font-style: italic;
+      margin-top: 1.5em;
+    }
+
     footer {
       position: fixed;
       bottom: 20px;
@@ -101,6 +158,18 @@
       font-size: 12px;
       font-weight: 300;
       letter-spacing: 0.08em;
+    }
+
+    /* Short windows — phone landscape especially — can't fit the composition,
+       so the page scrolls. A fixed footer would then ride over the vision
+       text; let it flow at the end instead, and drop the reserved band. */
+    @media (max-height: 560px) {
+      body { padding-bottom: 0; }
+
+      footer {
+        position: static;
+        margin: 40px 0 20px;
+      }
     }
 
   </style>
@@ -141,6 +210,12 @@ R.setProperty('--brand-size-min',   CONFIG.brandSizeMin);
     <p class="tagline">at the physical layer</p>
     <img src="pics/chip2agent-black.svg" alt="chip2agent" class="chip2agent-logo">
   </div>
+
+  <div class="vision">
+    <p class="vision-lead">We believe extending agentic AI automation to the physical world requires a simplified hardware layer.</p>
+    <p>We build one from first principles.</p>
+    <p class="vision-note">Now people express intent instead of syntax, and stay focused on what matters most to them.</p>
+  </div>
   </div>
 
   <footer>© 2026 NexDec LLC</footer>
@@ -180,17 +255,10 @@ R.setProperty('--brand-size-min',   CONFIG.brandSizeMin);
       }
 
       document.querySelector('.brand-text').style.visibility = 'visible';
-      centerH1();
     }
 
-    function centerH1() {
-      const pc = document.querySelector('.page-center');
-      pc.style.transform = '';
-      const h1 = document.querySelector('h1');
-      const h1CenterY = h1.getBoundingClientRect().top + h1.getBoundingClientRect().height / 2;
-      const offset = window.innerHeight / 2 - h1CenterY;
-      pc.style.transform = `translateY(${offset}px)`;
-    }
+    // Vertical centring is pure CSS (body flex + padding-bottom for the
+    // footer), so no measurement pass is needed here.
 
     document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(alignText)));
 
