@@ -68,12 +68,18 @@
       font-style: italic;
     }
 
+    /* Same font style as the AGENTIC AUTOMATION subtitle */
     .tagline {
-      color: #b3b3b3;
+      color: var(--subtitle-color, #808080);
       font-family: 'Georgia', serif;
-      font-size: 16px;
-      font-style: italic;
+      /* same computed size as .subtitle (0.17 of the brand scaling knob) */
+      font-size: calc(clamp(var(--brand-size-min), 6vw, var(--brand-size-max)) * 0.17);
+      font-style: normal;
       font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.45em;
+      /* cancel the trailing letter-space so the line stays optically centered */
+      margin-right: -0.45em;
       margin-top: 30px;
       text-align: center;
     }
@@ -132,7 +138,7 @@ R.setProperty('--brand-size-min',   CONFIG.brandSizeMin);
       <h1>Nexum Decoders<span class="tm">&#8482;</span></h1>
       <p class="subtitle"><span>A</span><span>G</span><span>E</span><span>N</span><span>T</span><span>I</span><span>C</span><span class="word-gap"></span><span>A</span><span>U</span><span>T</span><span>O</span><span>M</span><span>A</span><span>T</span><span>I</span><span>O</span><span>N</span></p>
     </div>
-    <p class="tagline">...building new operating systems</p>
+    <p class="tagline">at the physical layer</p>
     <img src="pics/chip2agent-black.svg" alt="chip2agent" class="chip2agent-logo">
   </div>
   </div>
