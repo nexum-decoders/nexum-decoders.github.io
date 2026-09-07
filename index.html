@@ -125,7 +125,10 @@
     /* Vision statement — hierarchy by size/color only, no bold, no second typeface */
     .vision {
       max-width: 44ch;
-      margin: 36px auto 0;
+      /* 2.1x the wordmark size (~100px at desktop width) — scales with the
+         lockup instead of being a fixed gap. (% would resolve against WIDTH
+         here, not height.) */
+      margin: calc(var(--brand-font) * 2.1) auto 0;
       font-family: 'Georgia', serif;
       font-weight: 300;
       line-height: 1.65;
